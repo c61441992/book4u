@@ -152,7 +152,7 @@ public class centerPanel extends javax.swing.JPanel {
         myList.get(currentSquareIndex).add(west, null);
     }
 
-    public void insertPictureFrame()
+    public JPanel insertPictureFrame()
     {
         JPanel panel = new JPanel();
         panel.setBackground(new java.awt.Color(255, 255, 255));
@@ -164,6 +164,20 @@ public class centerPanel extends javax.swing.JPanel {
         myList.add(new arrayListType(panel));
         add(panel, 0);
         updateUI();
+        MOUSEinit();
+         inout = true;
+        myList.get(count).setBorder(new LineBorder(Color.BLUE, 1));
+        count++;
+       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+       northWest.setVisible(false);
+       north.setVisible(false);
+       northEast.setVisible(false);
+       east.setVisible(false);
+       southEast.setVisible(false);
+       south.setVisible(false);
+       southWest.setVisible(false);
+        west.setVisible(false);
+        return panel;
     }
 
     public JTextPane insertTextArea()
@@ -252,7 +266,7 @@ public class centerPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
-            .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -576,12 +590,14 @@ public class centerPanel extends javax.swing.JPanel {
             
             DropTarget c=(DropTarget)dtde.getSource(); 
             JPanel d=(JPanel)c.getComponent(); 
-            d.removeAll(); 
-            d.setLayout(new FlowLayout(FlowLayout.LEFT));
+            for(int i = 0;i < d.getComponentCount();i++)
+                if(d.getComponent(i).getClass()==JLabel.class)
+                    d.remove(i);
+            d.setLayout(new OverlayLayout(d));
             s.addMouseListener(new MouseListen());
             s.addMouseListener(new MouseRightListen());
             s.addMouseMotionListener(new MouseListen());
-            d.add(s);
+            d.add(s,0);
             d.updateUI();
             
         }

@@ -21,7 +21,7 @@ public class mainFrame extends javax.swing.JFrame {
      * Creates new form main
      */
     public mainFrame() {
-        this.setAlwaysOnTop(true);
+        //this.setAlwaysOnTop(true);
         initComponents();
         JTabbedPane edit = new JTabbedPane();
 	JPanel photoFrame = new JPanel();
@@ -263,7 +263,8 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void pictureFrameMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pictureFrameMenuActionPerformed
         centerPanel centerP = (centerPanel)centerPanel;
-        centerP.insertPictureFrame();
+        JPanel panel = centerP.insertPictureFrame(); // 圖片的panel 
+        
     }//GEN-LAST:event_pictureFrameMenuActionPerformed
 
     private void pasteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteMenuActionPerformed

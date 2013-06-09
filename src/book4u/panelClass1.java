@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
  
  
 public class panelClass1 extends JPanel {
@@ -19,7 +20,7 @@ public class panelClass1 extends JPanel {
                 img.setBounds(50,50,300,300);
                 img.setBorder(BorderFactory.createLineBorder(Color.black));
                 img.setBackground(Color.white);
-                setLayout(null);
+                setLayout(new OverlayLayout(this));
                 setBackground(Color.white);
                 add(img);
         }
