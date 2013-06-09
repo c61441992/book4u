@@ -16,7 +16,7 @@ public class panelClass1 extends JPanel {
                 //editor.setBorder(BorderFactory.createLineBorder(Color.black));
  
                 JPanel img = new JPanel();
-                img.setPreferredSize(new Dimension(30,40));
+                //img.setPreferredSize(new Dimension(30,40));
                 img.setBounds(50,50,300,300);
                 img.setBorder(BorderFactory.createLineBorder(Color.black));
                 img.setBackground(Color.white);

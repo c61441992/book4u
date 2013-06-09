@@ -67,9 +67,10 @@ public class leftPanel extends JFrame {
                 ImageIODemo image = new ImageIODemo(); //使用者新增圖案且存到檔案夾中
                 imageComp = image.getReturn();
                 final String File_name = image.getFile();
+                final File file = new File(image.getFile());
+			new CopyFile(File_name, "userPic/" + file.getName());
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                         new ImageSaveToGifDemo(File_name, "userPic");
                         ImageIcon image = new ImageIcon(File_name);//重設圖片大小
                         int weight = image.getIconWidth() / 120;//設置圖片大小
                         image.setImage(image.getImage().getScaledInstance(
