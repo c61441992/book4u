@@ -13,7 +13,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
-//����C��
+//選取顏色
 import javax.swing.colorchooser.ColorSelectionModel;
 //wordArt Dialog
 public class EditPanel extends JPanel {
@@ -27,7 +27,7 @@ public class EditPanel extends JPanel {
 	private String FontSizeNum[] = {"20","22","24","26","28","36","48","52","56","60","64","68","72","76","80","84","88","92","96"};
 	private JComboBox typeFaceDropDown;
 	private JButton ClipboardBtn,colorSet;
-	private String typeFaceNames[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();  //��o�t�Φr��
+	private String typeFaceNames[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();  //取得系統字型
 	public JTextPane testText1;
 	private JTextField ClipboardHeight,ClipboardWidth;
 	private Color rsltColor = Color.BLACK;
@@ -37,7 +37,7 @@ public class EditPanel extends JPanel {
 	int bold = Font.PLAIN;
 	int italic=Font.PLAIN;
 	String fontfamily = "Serif";
-	//��r���N�v
+	//文字藝術師
 	private ImageIcon choice = new ImageIcon(getClass().getResource("images/choice.jpg"));
 	private ImageIcon imghollowWord = new ImageIcon(getClass().getResource("images/hollowWord.jpg"));
 	private ImageIcon ShearFont = new ImageIcon(getClass().getResource("images/ShearFont.png"));
@@ -48,10 +48,10 @@ public class EditPanel extends JPanel {
 	private JComboBox wordArt;
 	private JPanel testTextPanel;
 
-	public void call(centerPanel frame, JTextPane textPane)
+	public void call(JPanel frame, JTextPane textPane)
 	{
 		this.testText1 = textPane;
-		testText1.setBounds(textPane.getX(), textPane.getY(), textPane.getWidth(), textPane.getHeight()); //�]�w��r����bBorderLayout.Center������m
+		testText1.setBounds(textPane.getX(), textPane.getY(), textPane.getWidth(), textPane.getHeight()); //設定文字方塊在BorderLayout.Center中的位置
 		testText1.setFont(new Font(fontfamily,Font.PLAIN,fonts));
 		testTextPanel.add(testText1);	
 		frame.add(testText1,0);
@@ -64,29 +64,18 @@ public class EditPanel extends JPanel {
 		
 		testTextPanel = new JPanel();		
 		testTextPanel.setLayout(null);
-		/*---�s�W�Ҧ��s��\��panel---*/
-		JTabbedPane edit = new JTabbedPane();
-		JPanel photoFrame = new JPanel();
-		JPanel photoEdit = new JPanel();
-		JPanel textEdit = new JPanel();
-		edit.addTab("�ج[�s��", photoFrame);
-		edit.addTab("�Ϥ�s��", photoEdit);
-		edit.addTab("��r�s��", textEdit);
 		
-		imageEdit s= new imageEdit();
-		photoEdit.setBackground(colorRGB);
-		photoEdit.add(s);
-		/*---text�s��\��---*/
+		/*---text編輯功能---*/
 		JPanel textPanel = new JPanel();
-		//�r����D
-		JLabel typeFace = new JLabel("<html><u>1. �r�� :</u></html>");
-		typeFace.setFont(new Font("�L�n������", Font.BOLD, 20));
+		//字體標題
+		JLabel typeFace = new JLabel("<html><u>1. 字體 :</u></html>");
+		typeFace.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		GridBagConstraints c0 = new GridBagConstraints();
 		c0.gridx = 0;
 	    c0.gridy = 0;
 	    c0.gridwidth= 3;
         c0.anchor = GridBagConstraints.WEST;
-		//�r��
+		//字體
 		typeFaceDropDown = new JComboBox(typeFaceNames);
 		typeFaceDropDown.setMaximumRowCount(4);
 		typeFaceDropDown.setSelectedIndex(4);
@@ -96,7 +85,7 @@ public class EditPanel extends JPanel {
 	    c1.gridy = 1;
 	    c1.gridwidth= 2;
 	    c1.anchor = GridBagConstraints.WEST;
-		//�j�p
+		//大小
 		FontSizeDropDown = new JComboBox(FontSizeNum);
 		FontSizeDropDown.setMaximumRowCount(4);
 		FontSizeDropDown.setSelectedIndex(0);
@@ -105,13 +94,13 @@ public class EditPanel extends JPanel {
 		c2.gridx = 2;
 	    c2.gridy = 1;
 	    c2.anchor = GridBagConstraints.WEST;
-	    //�m��,�a��,�a�k
+	    //置中,靠左,靠右
 	    ButtonGroup radioGroup = new ButtonGroup();
-	    leftRadio = new JRadioButton("�a��",true);
+	    leftRadio = new JRadioButton("靠左",true);
 	    leftRadio.setBackground(colorRGB);
-	    centerRadio = new JRadioButton("�m��");
+	    centerRadio = new JRadioButton("置中");
 	    centerRadio.setBackground(colorRGB);
-	    rightRadio = new JRadioButton("�a�k");
+	    rightRadio = new JRadioButton("靠右");
 	    rightRadio.setBackground(colorRGB);
 	    radioGroup.add(leftRadio);
 	    radioGroup.add(centerRadio);
@@ -129,12 +118,12 @@ public class EditPanel extends JPanel {
 	    c5.gridy = 2;
 	    c5.anchor = GridBagConstraints.EAST;
 	    
-	    //����, ���u, ����
-	    boldBox = new JCheckBox("����");
+	    //粗體, 底線, 斜體
+	    boldBox = new JCheckBox("粗體");
 	    boldBox.setBackground(colorRGB);
-	    italicBox = new JCheckBox("����");
+	    italicBox = new JCheckBox("斜體");
 	    italicBox.setBackground(colorRGB);
-	    underlineBox = new JCheckBox("���u");
+	    underlineBox = new JCheckBox("底線");
 	    underlineBox.setBackground(colorRGB);
 	    GridBagConstraints c7 = new GridBagConstraints();
 	    c7.gridx = 0;
@@ -149,16 +138,16 @@ public class EditPanel extends JPanel {
 	    c9.gridy = 3;
 	    c9.anchor = GridBagConstraints.EAST;
 	    
-	    //�C��
-	    JLabel color = new JLabel("  �C��:");
-	    color.setFont(new Font("�L�n������", Font.BOLD, 16));
+	    //顏色
+	    JLabel color = new JLabel("  顏色:");
+	    color.setFont(new Font("微軟正黑體", Font.BOLD, 16));
 	    GridBagConstraints c10 = new GridBagConstraints();
 	    c10.gridx = 0;
 	    c10.gridy = 4;
 	    c10.gridwidth= 3;
 	    c10.anchor = GridBagConstraints.WEST;
 	    
-	    colorSet=new JButton("�r���C��");
+	    colorSet=new JButton("字體顏色");
 	    
 	    colorSet.addActionListener(new ActionListener()
 		{
@@ -169,7 +158,7 @@ public class EditPanel extends JPanel {
 			}
 			private Color chooseColor(Component comp)
 			{
-			   rsltColor =JColorChooser.showDialog(comp,"�C����",comp.getBackground());
+			   rsltColor =JColorChooser.showDialog(comp,"顏色選擇",comp.getBackground());
 			   return rsltColor;
 			}
 		});
@@ -179,7 +168,7 @@ public class EditPanel extends JPanel {
 	    c11.anchor = GridBagConstraints.WEST;
 	    
 	    
-	    //���j�u
+	    //分隔線
 	    LineComponent line = new LineComponent(0, 20, 200, 20, Color.WHITE);  //fx,fy,tx,ty
         line.setStroke(new BasicStroke(3f));
         GridBagConstraints c13 = new GridBagConstraints();
@@ -187,15 +176,15 @@ public class EditPanel extends JPanel {
 	    c13.gridy = 5;
 	    c13.gridwidth= 3;
         c13.anchor = GridBagConstraints.WEST;
-	    //�i���]�wlabel
-	    JLabel advanceSetup = new JLabel("<html><u>2. ��r���N�v :</u></html>");
-	    advanceSetup.setFont(new Font("�L�n������", Font.BOLD, 20));
+	    //進階設定label
+	    JLabel advanceSetup = new JLabel("<html><u>2. 文字藝術師 :</u></html>");
+	    advanceSetup.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		GridBagConstraints c12 = new GridBagConstraints();
 		c12.gridx = 0;
 	    c12.gridy = 6;
 	    c12.gridwidth= 3;
         c12.anchor = GridBagConstraints.WEST;
-        //��r���N�v
+        //文字藝術師
         for (int i = 0; i < imageIndex.length; i++) 
         {
         	imageIndex[i] = i;
@@ -211,7 +200,7 @@ public class EditPanel extends JPanel {
 	    c14.gridwidth= 3;
 	    c14.anchor = GridBagConstraints.WEST;
 	    
-	    //���j�u
+	    //分隔線
 	    LineComponent line2 = new LineComponent(0, 30, 200, 30, Color.WHITE);  //fx,fy,tx,ty
         line2.setStroke(new BasicStroke(3f));
         GridBagConstraints c18 = new GridBagConstraints();
@@ -220,18 +209,18 @@ public class EditPanel extends JPanel {
 	    c18.gridwidth= 3;
         c18.anchor = GridBagConstraints.WEST;
         
-	    //��~��
-	    JLabel ClipboardLabel = new JLabel("<html><u>3. ��~�� :</u></html>");
-	    ClipboardLabel.setFont(new Font("�L�n������", Font.BOLD, 20));
+	    //塗鴉版
+	    JLabel ClipboardLabel = new JLabel("<html><u>3. 塗鴉版 :</u></html>");
+	    ClipboardLabel.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		GridBagConstraints c15 = new GridBagConstraints();
 		c15.gridx = 0;
 	    c15.gridy = 9;
 	    c15.gridwidth= 3;
 	    c15.anchor = GridBagConstraints.WEST;
 	    
-	    //��~�O�j�p
+	    //塗鴉板大小
 	    JLabel ClipboardShapeLabel = new JLabel("  Width * Height : ");
-	    ClipboardLabel.setFont(new Font("�L�n������", Font.BOLD, 20));
+	    ClipboardLabel.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		GridBagConstraints c17 = new GridBagConstraints();
 		c17.gridx = 0;
 	    c17.gridy = 10;
@@ -241,11 +230,11 @@ public class EditPanel extends JPanel {
         JPanel heightAndWidth = new JPanel();
         heightAndWidth.setBackground(colorRGB);
         ClipboardWidth = new JTextField("300",4);
-        ClipboardWidth.setFont(new Font("�L�n������", Font.BOLD, 14));
+        ClipboardWidth.setFont(new Font("微軟正黑體", Font.BOLD, 14));
         ClipboardWidth.setHorizontalAlignment(ClipboardWidth.CENTER);
         JLabel multi = new JLabel("*");
         ClipboardHeight = new JTextField("200",4);
-        ClipboardHeight.setFont(new Font("�L�n������", Font.BOLD, 14));
+        ClipboardHeight.setFont(new Font("微軟正黑體", Font.BOLD, 14));
         ClipboardHeight.setHorizontalAlignment(ClipboardHeight.CENTER);
         heightAndWidth.add(ClipboardWidth);
         heightAndWidth.add(multi);
@@ -255,13 +244,13 @@ public class EditPanel extends JPanel {
 	    c19.gridy = 11;
 	    c19.gridwidth= 3;
         c19.anchor = GridBagConstraints.WEST;
-        //�إ�Btn
-	    ClipboardBtn = new JButton("�إ߶�~��");
+        //建立Btn
+	    ClipboardBtn = new JButton("建立塗鴉版");
 	    ClipboardBtn.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent event) 
 			{
-				new G2dClipboardDemo(frame,EditPanel.this,"��~��",true, Integer.parseInt(ClipboardWidth.getText()),Integer.parseInt(ClipboardHeight.getText()));
+				new G2dClipboardDemo(frame,EditPanel.this,"塗鴉版",true, Integer.parseInt(ClipboardWidth.getText()),Integer.parseInt(ClipboardHeight.getText()));
 			}
 		});
 	    GridBagConstraints c16 = new GridBagConstraints();
@@ -271,7 +260,7 @@ public class EditPanel extends JPanel {
         c16.anchor = GridBagConstraints.WEST;
 	    
         
-		//�[�JtextPanel
+		//加入textPanel
 	    textPanel.setBackground(colorRGB);
 		textPanel.setLayout(new GridBagLayout());
 		textPanel.add(typeFace,c0);
@@ -294,10 +283,8 @@ public class EditPanel extends JPanel {
 		textPanel.add(heightAndWidth,c19);
 		textPanel.add(ClipboardBtn,c16);
 		
-		textEdit.add(textPanel);
-		textEdit.setBackground(colorRGB);
-		
-		 //register events for TextEdit
+		this.add(textPanel,BorderLayout.CENTER);
+		//register events for TextEdit
 		TextFontHandler handler = new TextFontHandler();
 		typeFaceDropDown.addItemListener(handler);
 		FontSizeDropDown.addItemListener(handler);
@@ -317,20 +304,20 @@ public class EditPanel extends JPanel {
 	    			switch(wordArt.getSelectedIndex())
 	    			{
 	    				case 1:
-	    					//�Ťߦr
-	    					new Dialog(frame,EditPanel.this,"�s���r���N�v��r",true,1);
+	    					//空心字
+	    					new Dialog(frame,EditPanel.this,"編輯文字藝術師文字",true,1);
 	    					break;
 	    				case 2:
-	    					//����r
-	    					new Dialog(frame,EditPanel.this,"�s���r���N�v��r",true,2);
+	    					//斜體字
+	    					new Dialog(frame,EditPanel.this,"編輯文字藝術師文字",true,2);
 	    					break;
 	    				case 3:
-	    					//����r
-	    					new Dialog(frame,EditPanel.this,"�s���r���N�v��r",true,3);
+	    					//立體字
+	    					new Dialog(frame,EditPanel.this,"編輯文字藝術師文字",true,3);
 	    					break;
 	    				case 4:
-	    					//���v
-	    					new Dialog(frame,EditPanel.this,"�s���r���N�v��r",true,4);
+	    					//陰影
+	    					new Dialog(frame,EditPanel.this,"編輯文字藝術師文字",true,4);
 	    					break;
 	    				default:
 	    					break;
@@ -341,7 +328,7 @@ public class EditPanel extends JPanel {
 	    			
 		    }
 	    });
-	    this.add(edit,BorderLayout.EAST);
+	    
 	    
 		
 	}

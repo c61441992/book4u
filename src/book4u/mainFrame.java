@@ -5,7 +5,10 @@
 package book4u;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 
 /**
@@ -13,13 +16,29 @@ import javax.swing.JTextPane;
  * @author 桌電
  */
 public class mainFrame extends javax.swing.JFrame {
-
+    EditPanel text;
     /**
      * Creates new form main
      */
     public mainFrame() {
         
         initComponents();
+        JTabbedPane edit = new JTabbedPane();
+	JPanel photoFrame = new JPanel();
+	JPanel photoEdit = new JPanel();
+	JPanel textEdit = new JPanel();
+	edit.addTab("框架編輯", photoFrame);
+	edit.addTab("圖片編輯", photoEdit);
+	edit.addTab("文字編輯", textEdit);
+	//加入文字編輯panel
+	textEdit.setBackground(new Color(98, 134, 167));
+	text = new EditPanel(this);
+	textEdit.add(text);
+	//加入圖片編輯panel
+	photoEdit.setBackground(new Color(98, 134, 167));
+	imageEdit photo = new imageEdit();
+	photoEdit.add(photo);	
+	rightPanel.add(edit,BorderLayout.EAST);
     }
 
     public centerPanel getCenterPanel()
@@ -47,7 +66,7 @@ public class mainFrame extends javax.swing.JFrame {
         leftPanel left=new leftPanel ();
         leftPanel = left.addLeftPanel ( );
         centerPanel = new centerPanel(this);
-        rightPanel = new EditPanel(this);
+        rightPanel = new javax.swing.JPanel();
         topPanel = new javax.swing.JPanel();
         menuPanel = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
@@ -252,9 +271,8 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void textBoxMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBoxMenuActionPerformed
         centerPanel centerP = (centerPanel)centerPanel;
-        EditPanel panel = (EditPanel) rightPanel;
         JTextPane p = centerP.insertTextArea();  //文字框add到我的centerPanel
-        panel.call(centerP, p); //這行加入到你的  刪除這行可正常顯示
+        text.call(centerP, p); //這行加入到你的  刪除這行可正常顯示
     }//GEN-LAST:event_textBoxMenuActionPerformed
 
     
