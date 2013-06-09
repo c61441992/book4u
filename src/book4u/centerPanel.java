@@ -211,11 +211,7 @@ public class centerPanel extends javax.swing.JPanel {
                 menuItem2_actionPerformed(e);
             }
         });
-        this.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                this_mousePressed(e);
-            }
-        });
+        this.addMouseListener(new MouseRightListen());
         rightMenu.add(menuItem1);
         rightMenu.add(menuItem2);
         add(rightMenu);
@@ -276,22 +272,27 @@ public class centerPanel extends javax.swing.JPanel {
         insertTextArea();
         
 }
-     void this_mousePressed(MouseEvent e) {
-int mods=e.getModifiers();
-if((mods&InputEvent.BUTTON3_MASK)!=0){
-rightMenu.show(this,e.getX(),e.getY());
-}
-}
+ 
+     public class MouseRightListen extends MouseAdapter 
+     {
+         @Override
+         public void mousePressed(MouseEvent e) {
+                int mods=e.getModifiers();
+               if((mods&InputEvent.BUTTON3_MASK)!=0){
+               rightMenu.show(centerPanel.this,e.getX(),e.getY());
+               }
+            }
+     }
+ 
     public class MouseListen extends MouseAdapter 
         {
-                    @Override
+          @Override
            public void mouseClicked(MouseEvent e) {
-                JComponent panel = (JComponent) e.getSource();
                 if(myList.isEmpty())
                     return;
                 p1=e.getLocationOnScreen();
-                p1.x-=panel.getLocationOnScreen().x;
-                p1.y-=panel.getLocationOnScreen().y;
+                p1.x-=centerPanel.this.getLocationOnScreen().x;
+                p1.y-=centerPanel.this.getLocationOnScreen().y;
                  currentSquareIndex = getRec(p1);
                  if(currentSquareIndex>=0){
                  if(currentSquareIndex<=count)
@@ -381,7 +382,6 @@ rightMenu.show(this,e.getX(),e.getY());
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                JComponent panel = (JComponent) e.getSource();
                 if(myList.isEmpty())
                     return;
                 if (isSelected>=0) {
@@ -401,18 +401,17 @@ rightMenu.show(this,e.getX(),e.getY());
                     setCursor(new Cursor(Cursor.SW_RESIZE_CURSOR));
                     } else if (e.getComponent() == west) {
                     setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
-                    }/*else if(e.getComponent() == panel){ 
+                    }else if(e.getComponent() == centerPanel.this){ 
                         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    }*/
+                    }
                 }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                JComponent panel = (JComponent) e.getSource();
                 if(myList.isEmpty())
                     return;
-                if(e.getComponent() == panel){ 
+                if(e.getComponent() == centerPanel.this){ 
                         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
             }
@@ -511,10 +510,9 @@ rightMenu.show(this,e.getX(),e.getY());
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                JComponent panel = (JComponent) e.getSource();
                p1=e.getLocationOnScreen();
-              p1.x-=panel.getLocationOnScreen().x;
-             p1.y-=panel.getLocationOnScreen().y;
+              p1.x-=centerPanel.this.getLocationOnScreen().x;
+             p1.y-=centerPanel.this.getLocationOnScreen().y;
             currentSquareIndex = getRec(p1);
          if( currentSquareIndex>=0){
          isSelected = currentSquareIndex;      
@@ -580,10 +578,10 @@ rightMenu.show(this,e.getX(),e.getY());
             JPanel d=(JPanel)c.getComponent(); 
             d.removeAll(); 
             d.setLayout(new FlowLayout(FlowLayout.LEFT));
-            d.add(s);
             s.addMouseListener(new MouseListen());
+            s.addMouseListener(new MouseRightListen());
             s.addMouseMotionListener(new MouseListen());
-            //d.add(s);
+            d.add(s);
             d.updateUI();
             
         }
