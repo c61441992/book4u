@@ -154,8 +154,7 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
         panel.setLayout(null);
         
         panel.setBounds(50, 50, 100, 100);
-        DropTarget dropTarget = new DropTarget(panel, 
-            new DragAndDropDropTargetListener());
+        DropTarget dropTarget = new DropTarget(panel,new DragAndDropDropTargetListener());
         myList.add(new arrayListType(panel));
         add(panel, 0);
         updateUI();
@@ -184,10 +183,11 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
     private void initComponents() {
 
         leftPanel = new javax.swing.JPanel();
-        rightPanel = new javax.swing.JPanel();
+        rightPanel = new panelClass1();
 
         leftPanel.setBackground(new java.awt.Color(255, 255, 255));
         leftPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255)));
+        DropTarget dropTarget = new DropTarget(leftPanel,new DragAndDropDropTargetListener());
         leftPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         leftPanel.setOpaque(false);
         leftPanel.setPreferredSize(new java.awt.Dimension(2, 2));
@@ -205,19 +205,9 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
 
         rightPanel.setBackground(new java.awt.Color(255, 255, 255));
         rightPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255)));
+        DropTarget dropTarget2 = new DropTarget(rightPanel,new DragAndDropDropTargetListener());
         rightPanel.setOpaque(false);
         rightPanel.setPreferredSize(new java.awt.Dimension(2, 2));
-
-        javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
-        rightPanel.setLayout(rightPanelLayout);
-        rightPanelLayout.setHorizontalGroup(
-            rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 391, Short.MAX_VALUE)
-        );
-        rightPanelLayout.setVerticalGroup(
-            rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -226,12 +216,12 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
             .addGroup(layout.createSequentialGroup()
                 .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
                 .addGap(6, 6, 6)
-                .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
-            .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+            .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -239,8 +229,11 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
     private javax.swing.JPanel rightPanel;
     // End of variables declaration//GEN-END:variables
 
+    
    @Override
    public void mouseClicked(MouseEvent e) {
+        if(myList.isEmpty())
+            return;
         p1=e.getLocationOnScreen();
         p1.x-=this.getLocationOnScreen().x;
         p1.y-=this.getLocationOnScreen().y;
@@ -269,17 +262,17 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
          else 
          {
      //        isSelected = currentSquareIndex;
-                     inout = true;
+            inout = true;
             myList.get(isSelected).setBorder(new EmptyBorder(0,0,100,100));
-   setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        northWest.setVisible(false);
-        north.setVisible(false);
-        northEast.setVisible(false);
-        east.setVisible(false);
-        southEast.setVisible(false);
-        south.setVisible(false);
-        southWest.setVisible(false);
-      west.setVisible(false);
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            northWest.setVisible(false);
+            north.setVisible(false);
+            northEast.setVisible(false);
+            east.setVisible(false);
+            southEast.setVisible(false);
+            south.setVisible(false);
+            southWest.setVisible(false);
+          west.setVisible(false);
      //   System.out.printf("out");
        // myList.get(currentSquareIndex).repaint();
          }
@@ -287,6 +280,8 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if(myList.isEmpty())
+            return;
         p1 = e.getPoint();
  //        p1=e.getLocationOnScreen();
   //      p1.x-=this.getLocationOnScreen().x;
@@ -304,6 +299,8 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
     }
 @Override
    public void mouseReleased(MouseEvent e) {
+     if(myList.isEmpty())
+            return;
       p1 = e.getLocationOnScreen();
             if(currentSquareIndex>=0){
              if(getCursor().getType()!=Cursor.DEFAULT_CURSOR){
@@ -329,6 +326,8 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        if(myList.isEmpty())
+            return;
         if (isSelected>=0) {
             if (e.getComponent() == northWest) {
             setCursor(new Cursor(Cursor.NW_RESIZE_CURSOR));
@@ -354,6 +353,8 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
 
     @Override
     public void mouseExited(MouseEvent e) {
+        if(myList.isEmpty())
+            return;
         if(e.getComponent() == this){ 
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -361,6 +362,8 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
 
     @Override
     public void mouseDragged(MouseEvent e) {
+         if(myList.isEmpty())
+            return;
        // p1 = e.getPoint();
           if(isSelected>=0){
                  x = myList.get(isSelected).getX();
@@ -451,6 +454,8 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        if(myList.isEmpty())
+            return;
          p1=e.getLocationOnScreen();
         p1.x-=this.getLocationOnScreen().x;
         p1.y-=this.getLocationOnScreen().y;
@@ -462,6 +467,8 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
       private int getRec(Point pt) {
         Point touch = new Point(pt);
         System.out.printf("pt-%d,%d\n",pt.x,pt.y);
+        if(myList.isEmpty())
+            return -1;
         for (int i = myList.size()-1; i >= 0 ; i--) {
             System.out.printf("%d--%d,%d\n",i,myList.get(i).getLocation().x,myList.get(i).getLocation().y);
             touch.setLocation(pt.x-myList.get(i).getX(), pt.y-myList.get(i).getY());
@@ -509,9 +516,37 @@ public class centerPanel extends javax.swing.JPanel implements MouseListener,Mou
             DropTarget c=(DropTarget)dtde.getSource(); 
             JPanel d=(JPanel)c.getComponent(); 
             d.removeAll(); 
-            d.setLayout(new FlowLayout(FlowLayout.LEFT , 10 , 10));
+            d.setLayout(new FlowLayout(FlowLayout.LEFT));
             d.add(s);
+            d.addMouseListener(new MouseListener(){
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    JLabel s =(JLabel) e.getSource();
+                    
+                }
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                   }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                 }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                                    }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                                   }
+            
+            });
+            //d.add(s);
             d.updateUI();
+            
         }
     }
+
+    
 }

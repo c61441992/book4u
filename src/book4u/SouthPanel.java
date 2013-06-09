@@ -17,6 +17,9 @@ import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.ImageIcon;
@@ -117,7 +120,7 @@ public class SouthPanel  extends JFrame{
 			for(int i=0 ; i<filelist.length;i++){
 	    			ImageIcon image = new ImageIcon(pathName+"/"+filelist[i]);
 			    	image.setImage(image.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT)); //���]�Ϥ�j�p
-			         JLabel imgLabel2= new JLabel(image); 
+			        JLabel imgLabel2= new JLabel(image); 
 			        picturePanelTab.add(imgLabel2); //�[�J�Ϥ�
                                 DragSource dragSource = DragSource.getDefaultDragSource();
                                 dragSource.createDefaultDragGestureRecognizer(imgLabel2, 
@@ -192,6 +195,41 @@ public class SouthPanel  extends JFrame{
         public void dragDropEnd(DragSourceDropEvent dsde) {
        }
         
+    }
+    
+    public class ClickThroughLabel extends JLabel implements MouseListener,MouseMotionListener 
+    {
+
+        private ClickThroughLabel(ImageIcon image) {
+            super(image);
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+ }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+   }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+   }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+        @Override
+        public void mouseExited(MouseEvent e) {
+                   }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+                    }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+                    }
     }
     
 }

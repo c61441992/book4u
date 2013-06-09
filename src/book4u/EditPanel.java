@@ -1,9 +1,13 @@
 package book4u;
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.print.attribute.AttributeSet;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -44,19 +48,22 @@ public class EditPanel extends JPanel {
 	private JComboBox wordArt;
 	private JPanel testTextPanel;
 
-
-	public void call(centerPanel panel, JTextPane textPane)
+	public void call(centerPanel frame, JTextPane textPane)
 	{
-                this.testText1 = textPane;
-                testText1.setBounds(textPane.getX(), textPane.getY(),textPane.getWidth(), textPane.getWidth());
-                testText1.setFont(new Font(fontfamily,Font.PLAIN,fonts));
-                panel.add(testText1,0);
+		this.testText1 = textPane;
+		testText1.setBounds(textPane.getX(), textPane.getY(), textPane.getWidth(), textPane.getHeight()); //�]�w��r����bBorderLayout.Center������m
+		testText1.setFont(new Font(fontfamily,Font.PLAIN,fonts));
+		testTextPanel.add(testText1);	
+		frame.add(testTextPanel,BorderLayout.CENTER);
 	}
 	public EditPanel(final mainFrame frame)
 	{	
 		this.setLayout(new BorderLayout());
+		/*--Test Panel--*/		
 		testText1 = new JTextPane();
 		
+		testTextPanel = new JPanel();		
+		testTextPanel.setLayout(null);
 		/*---�s�W�Ҧ��s��\��panel---*/
 		JTabbedPane edit = new JTabbedPane();
 		JPanel photoFrame = new JPanel();
@@ -66,6 +73,9 @@ public class EditPanel extends JPanel {
 		edit.addTab("�Ϥ�s��", photoEdit);
 		edit.addTab("��r�s��", textEdit);
 		
+		imageEdit s= new imageEdit();
+		photoEdit.setBackground(colorRGB);
+		photoEdit.add(s);
 		/*---text�s��\��---*/
 		JPanel textPanel = new JPanel();
 		//�r����D
@@ -154,8 +164,8 @@ public class EditPanel extends JPanel {
 		{
 			public void actionPerformed(ActionEvent event) 
 			{
-				testText1.setForeground(this.chooseColor(testText1));
-				colorSet.setForeground(rsltColor);
+				 colorSet.setForeground(this.chooseColor(testText1));
+				 testText1.setForeground(rsltColor);
 			}
 			private Color chooseColor(Component comp)
 			{
@@ -331,10 +341,7 @@ public class EditPanel extends JPanel {
 	    			
 		    }
 	    });
-
-            
-            
-	    this.add(edit,BorderLayout.EAST);
+	    frame.add(edit,BorderLayout.EAST);
 	    
 		
 	}
@@ -354,16 +361,19 @@ public class EditPanel extends JPanel {
 			{
 		         if(e.getStateChange() == ItemEvent.SELECTED)
 		         {	 
-		        	SimpleAttributeSet attrs = new SimpleAttributeSet();
-		            StyleConstants.setUnderline(attrs, true);
-		            String tempStr = testText1.getText();
-		            testText1.setText("");
-		     		try {
-						testText1.getDocument().insertString(0,tempStr,attrs);
-					} catch (BadLocationException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+		        	
+		        	 String tempStr = testText1.getSelectedText();
+					 if( !(tempStr == null))
+					 {	
+						 SimpleAttributeSet attrs = new SimpleAttributeSet();
+				         StyleConstants.setUnderline(attrs, true);
+						 int index = testText1.getText().indexOf(tempStr);
+						 testText1.setText(testText1.getText().replace(testText1.getSelectedText(),""));
+					 
+						 testText1.setCaretPosition(index);  // place caret at the end (with no selection)
+						 testText1.setCharacterAttributes(attrs, false);
+						 testText1.replaceSelection(tempStr); // there is no selection, so inserts at caret
+					 }
 		         }
 		         else if(e.getStateChange() == ItemEvent.DESELECTED){
 		        	 SimpleAttributeSet attrs = new SimpleAttributeSet();

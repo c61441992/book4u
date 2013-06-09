@@ -139,7 +139,7 @@
                   <Component id="topPanel" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="rightPanel" min="-2" pref="238" max="-2" attributes="0"/>
+              <Component id="rightPanel" min="-2" pref="224" max="-2" attributes="0"/>
           </Group>
           <Component id="bottomPanel" pref="1146" max="32767" attributes="0"/>
       </Group>
@@ -148,13 +148,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="leftPanel" pref="515" max="32767" attributes="0"/>
+                  <Component id="leftPanel" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="topPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="menuPanel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="centerPanel" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="centerPanel" min="-2" pref="350" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
                   <Component id="rightPanel" alignment="0" max="32767" attributes="0"/>
