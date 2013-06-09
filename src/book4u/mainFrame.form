@@ -141,7 +141,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="rightPanel" min="-2" pref="240" max="-2" attributes="0"/>
           </Group>
-          <Component id="bottomPanel" pref="1146" max="32767" attributes="0"/>
+          <Component id="bottomPanel" pref="1159" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -153,8 +153,8 @@
                       <Component id="topPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="menuPanel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="centerPanel" min="-2" pref="350" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="centerPanel" pref="430" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
                   <Component id="rightPanel" alignment="0" max="32767" attributes="0"/>
@@ -207,6 +207,9 @@
     </Container>
     <Container class="javax.swing.JPanel" name="centerPanel">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder/>
