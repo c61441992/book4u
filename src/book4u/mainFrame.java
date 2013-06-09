@@ -21,7 +21,7 @@ public class mainFrame extends javax.swing.JFrame {
      * Creates new form main
      */
     public mainFrame() {
-        
+        this.setAlwaysOnTop(true);
         initComponents();
         JTabbedPane edit = new JTabbedPane();
 	JPanel photoFrame = new JPanel();
