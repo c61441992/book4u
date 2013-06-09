@@ -13,6 +13,8 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -28,6 +30,8 @@ import javax.swing.border.LineBorder;
  * @author 桌電
  */
 public class centerPanel extends javax.swing.JPanel {
+     MenuItem menuItem1 = new MenuItem();
+    MenuItem menuItem2 = new MenuItem();
     private static ArrayList<arrayListType> myList;
     private int currentSquareIndex = -1;
     private Point p1;
@@ -184,8 +188,37 @@ public class centerPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        rightMenu = new java.awt.PopupMenu();
         leftPanel = new javax.swing.JPanel();
         rightPanel = new panelClass1();
+
+        rightMenu.setActionCommand("popupMenu");
+        rightMenu.setLabel("popupMenu1");
+        rightMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rightMenuActionPerformed(evt);
+            }
+        });
+        menuItem1.setLabel("insertPictureFrame");
+        menuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                menuItem1_actionPerformed(e);
+            }
+        });
+        menuItem2.setLabel("insertTextArea");
+        menuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                menuItem2_actionPerformed(e);
+            }
+        });
+        this.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                this_mousePressed(e);
+            }
+        });
+        rightMenu.add(menuItem1);
+        rightMenu.add(menuItem2);
+        add(rightMenu);
 
         leftPanel.setBackground(new java.awt.Color(255, 255, 255));
         leftPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255)));
@@ -226,13 +259,31 @@ public class centerPanel extends javax.swing.JPanel {
             .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rightMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rightMenuActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel leftPanel;
+    private java.awt.PopupMenu rightMenu;
     private javax.swing.JPanel rightPanel;
     // End of variables declaration//GEN-END:variables
-        public class MouseListen extends MouseAdapter 
+      void menuItem1_actionPerformed(ActionEvent e) {
+        insertPictureFrame();
+}
+ void menuItem2_actionPerformed(ActionEvent e) {
+        insertTextArea();
+        
+}
+     void this_mousePressed(MouseEvent e) {
+int mods=e.getModifiers();
+if((mods&InputEvent.BUTTON3_MASK)!=0){
+rightMenu.show(this,e.getX(),e.getY());
+}
+}
+    public class MouseListen extends MouseAdapter 
         {
-
                     @Override
            public void mouseClicked(MouseEvent e) {
                 JComponent panel = (JComponent) e.getSource();
@@ -350,9 +401,9 @@ public class centerPanel extends javax.swing.JPanel {
                     setCursor(new Cursor(Cursor.SW_RESIZE_CURSOR));
                     } else if (e.getComponent() == west) {
                     setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
-                    }else if(e.getComponent() == panel){ 
+                    }/*else if(e.getComponent() == panel){ 
                         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    }
+                    }*/
                 }
             }
 
@@ -461,15 +512,17 @@ public class centerPanel extends javax.swing.JPanel {
             @Override
             public void mouseMoved(MouseEvent e) {
                 JComponent panel = (JComponent) e.getSource();
+               p1=e.getLocationOnScreen();
+              p1.x-=panel.getLocationOnScreen().x;
+             p1.y-=panel.getLocationOnScreen().y;
+            currentSquareIndex = getRec(p1);
+         if( currentSquareIndex>=0){
+         isSelected = currentSquareIndex;      
+         }
+                
                 e.getSource();
                 if(myList.isEmpty())
                     return;
-                 p1=e.getLocationOnScreen();
-                 p1.x-=panel.getLocationOnScreen().x;
-                 p1.y-=panel.getLocationOnScreen().y;
-                 currentSquareIndex = getRec(p1);
-                 if( currentSquareIndex>=0)
-                 isSelected = currentSquareIndex;
             }
         }
     
