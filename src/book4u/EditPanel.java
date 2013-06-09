@@ -54,7 +54,7 @@ public class EditPanel extends JPanel {
 		testText1.setBounds(textPane.getX(), textPane.getY(), textPane.getWidth(), textPane.getHeight()); //�]�w��r����bBorderLayout.Center������m
 		testText1.setFont(new Font(fontfamily,Font.PLAIN,fonts));
 		testTextPanel.add(testText1);	
-		frame.add(testTextPanel,BorderLayout.CENTER);
+		frame.add(testText1,0);
 	}
 	public EditPanel(final mainFrame frame)
 	{	
@@ -341,7 +341,7 @@ public class EditPanel extends JPanel {
 	    			
 		    }
 	    });
-	    frame.add(edit,BorderLayout.EAST);
+	    this.add(edit,BorderLayout.EAST);
 	    
 		
 	}
