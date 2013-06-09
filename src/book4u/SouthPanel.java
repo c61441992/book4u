@@ -31,103 +31,116 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
-public class SouthPanel  extends JFrame{
-		
-	    private JPanel LayoutPanel; //�ŧi�@�ӷs��panel
-	    ImageComponent imageComp;
+
+public class SouthPanel extends JFrame {
+
+            private JPanel LayoutPanel; //宣告一個新的panel
+            ImageComponent imageComp;
+
+            public JPanel addSouthPanel() {
+                LayoutPanel = new JPanel();
+                LayoutPanel.setLayout(new BorderLayout());
+                JButton userAdd = new JButton("+");
+                userAdd.setBounds(250, 0, 50, 20);
+                //getContentPane().add( LayoutPanel );
+                final String str[] = {"頁面樣式", "遮罩", "背景", "物件庫"};
+                final JTabbedPane tab = new JTabbedPane();
+                for (int i = 0; i < 4; i++) {
+                    tab.add(str[i], createPanel(str[i]));
+                }
+                tab.setBackground(Color.WHITE);
+                LayoutPanel.add(userAdd);
+                LayoutPanel.add(tab);
+                //=======================================================
+                userAdd.addActionListener(new ActionListener() {
+                    //使用者新增檔案按鈕動作
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        ImageIODemo image = new ImageIODemo(); //使用者新增圖案且存到檔案夾中
+                        imageComp = image.getReturn();
+                        final String File_name = image.getFile();
+                        final int temp = tab.getSelectedIndex(); //讀取目前所在的Jpanel位置
+                        System.out.println(temp);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                switch (temp) {
+                                    case 0:
+                                        new ImageSaveToGifDemo(File_name, "pageMode");
+                                        break;
+                                    case 1:
+                                        new ImageSaveToGifDemo(File_name, "mask");
+                                        break;
+                                    case 2:
+                                        new ImageSaveToGifDemo(File_name, "bground");
+                                        break;
+                                    case 3:
+                                        new ImageSaveToGifDemo(File_name, "pic");
+                                        break;
+                                }
+                                tab.removeAll();//清除所有的tab方便重新建立新的tab((重新讀取檔案中的資料
+                                                                 //因為tab為final無法直接新增使用者上傳的圖案
+                                                                 //所以用清除所有的tab重新讀取檔案資料方便知道使用者上傳的檔案
+                                for (int i = 0; i < 4; i++) {
+                                    tab.add(str[i], createPanel(str[i]));
+                                }
+                            }
+                        });
+                    }
+                });
+                //===============================使用者新增檔案按鈕動作<END>
+                return LayoutPanel;
+            }
+
+            JScrollPane createPanel(String str) { //panel選項
+                JScrollPane jp = new JScrollPane(); //有滑桿可拉的panel
+                switch (str) {
+                    case "頁面樣式":
+                        jp.getViewport().add(objectDB("pageMode"));//頁面框架型式
+                        break;
+                    case "遮罩":
+                        jp.getViewport().add(objectDB("mask")); //有點類似浮水印的做法
+                        break;
+                    case "背景":
+                        jp.getViewport().add(objectDB("bground"));//物件庫的檔案存在bground資料夾底下
+                        break;
+                    case "物件庫":
+                        jp.getViewport().add(objectDB("pic")); //物件庫的檔案存在pic資料夾底下
+                        break;
+                }
+                return jp;
+            }
 	    
-		public JPanel addSouthPanel ( ){
-			LayoutPanel= new JPanel();
-			LayoutPanel.setLayout( new BorderLayout() );
-			JButton userAdd=new JButton("+");
-			userAdd.setBounds(250,0,50,20);
-			//getContentPane().add( LayoutPanel );
-		    final String str[ ] = { "�����˦�" , "�B�n" , "�I��" , "����w"} ;
-		    final JTabbedPane tab = new JTabbedPane ( ) ;
-		        for ( int i=0 ; i <4 ; i++ ) 
-		        		tab.add(str[i],createPanel(str[i]));
-		     tab.setBackground(Color.WHITE);		
-		     LayoutPanel.add(userAdd );
-		     LayoutPanel.add( tab );
-			//=======================================================
-			userAdd.addActionListener(new ActionListener(){ 
-				//�ϥΪ̷s�W�ɮ׫��s�ʧ@
-		            @Override
-		            public void actionPerformed(ActionEvent arg0) {
-		            	ImageIODemo image=new ImageIODemo(); //�ϥΪ̷s�W�ϮץB�s���ɮק���
-		                	 imageComp=image.getReturn();
-		                	 final String File_name=image.getFile();
-		                	  final int temp = tab.getSelectedIndex(); //Ū��ثe�Ҧb��Jpanel��m
-		                	  System.out.println(temp);
-		                	        SwingUtilities.invokeLater(new Runnable() {
-		                	            public void run() {
-		                	            	switch(temp){
-		                	            	case 0:
-		                	                new ImageSaveToGifDemo(File_name,"pageMode");
-		                	                break;
-		                	            	case 1:
-		                	            		 new ImageSaveToGifDemo(File_name,"mask");
-		                	            	     break;
-		                	            	case 2:
-		                	            		 new ImageSaveToGifDemo(File_name,"bground");
-		                	            	     break;
-		                	            	case 3:
-		                	            		 new ImageSaveToGifDemo(File_name,"pic");
-		                	            	     break;                	
-		                	            	}
-		                	            	 tab.removeAll(); //�M���Ҧ���tab��K���s�إ߷s��tab((���sŪ���ɮפ������
-		                	            	 //�]��tab��final�L�k�����s�W�ϥΪ̤W�Ǫ��Ϯ�
-		                	            	 //�ҥH�βM���Ҧ���tab���sŪ���ɮ׸�Ƥ�K���D�ϥΪ̤W�Ǫ��ɮ�
-			                	                for ( int i=0 ; i <4 ; i++ ) 
-			                		        		tab.add(str[i],createPanel(str[i]));   
-		                	            }
-		                	        }
-		                	        );   
-		            }
-		            }
-			);
-			//===============================�ϥΪ̷s�W�ɮ׫��s�ʧ@<END>
-			return LayoutPanel;
-		}
-		
-		JScrollPane  createPanel(String str){ //panel�ﶵ
-	    	JScrollPane jp= new JScrollPane(); //���Ʊ�i�Ԫ�panel
-	    	switch (str){
-		    	case "�����˦�":
-		    		 jp.getViewport().add( objectDB ("pageMode" ) );//�����ج[����
-		    		break;
-		        case "�B�n":
-		        	 jp.getViewport().add( objectDB ("mask" ) ); //���I����B���L�����k
-		        	break;
-		        case "�I��":
-		        	 jp.getViewport().add( objectDB ("bground" ) );//����w���ɮצs�bbground��Ƨ����U
-		        	break;
-		        case "����w":
-		          jp.getViewport().add( objectDB ("pic" ) ); //����w���ɮצs�bpic��Ƨ����U
-		          	break;
-	        }
-	        return jp;
-	    }
-	    
-		JPanel objectDB (String pathName ) {
-			 //�s�Ҧ��פU�����ɦW��
-			File file = new File( pathName);
-			String[] filelist = file.list();
-			//*********************************�s���ɦW��
-			
-			JPanel picturePanelTab = new JPanel();
-			picturePanelTab.setBackground(Color.WHITE);
-			for(int i=0 ; i<filelist.length;i++){
-	    			ImageIcon image = new ImageIcon(pathName+"/"+filelist[i]);
-			    	image.setImage(image.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT)); //���]�Ϥ�j�p
+            JPanel objectDB(String pathName) {
+               //存所有擋下的圖檔名稱
+                File file = new File(pathName);
+                String[] filelist = file.list();
+                //*********************************存圖檔名稱
+
+                JPanel picturePanelTab = new JPanel();
+                picturePanelTab.setBackground(Color.WHITE);
+                for (int i = 0; i < filelist.length; i++) {
+                        ImageIcon image = new ImageIcon(pathName + "/" + filelist[i]);
+                            try{
+                             int weight = image.getIconHeight() / 70;//設置圖片大小
+                                                image.setImage(image.getImage().getScaledInstance(
+                                                        image.getIconWidth()  / weight,
+                                                       image.getIconHeight() / weight,
+                                                        Image.SCALE_DEFAULT));
+                            }
+                                    catch (Exception ex) {
+                            image.setImage(image.getImage().getScaledInstance(
+                                    100,
+                                     100,
+                                    Image.SCALE_DEFAULT));
+                        }
 			        JLabel imgLabel2= new JLabel(image); 
-			        picturePanelTab.add(imgLabel2); //�[�J�Ϥ�
+			        picturePanelTab.add(imgLabel2);//加入圖片
                                 DragSource dragSource = DragSource.getDefaultDragSource();
                                 dragSource.createDefaultDragGestureRecognizer(imgLabel2, 
                                 DnDConstants.ACTION_COPY_OR_MOVE,new DragAndDropDragGestureListener());
 
                         }
-                picturePanelTab.setLayout(new FlowLayout(FlowLayout.LEFT , 10 , 10)); //����V�����
+                picturePanelTab.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 15));  //物件向左對齊
 	    	return picturePanelTab;
 		}
                 
