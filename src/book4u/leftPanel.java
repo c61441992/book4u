@@ -68,7 +68,7 @@ public class leftPanel extends JFrame {
                 imageComp = image.getReturn();
                 final String File_name = image.getFile();
                 final File file = new File(image.getFile());
-			new CopyFile(File_name, "userPic/" + file.getName());
+                new CopyFile(File_name, "userPic/" + file.getName());
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         ImageIcon image = new ImageIcon(File_name);//重設圖片大小
@@ -77,7 +77,7 @@ public class leftPanel extends JFrame {
                                 image.getIconWidth() / weight,
                                 image.getIconHeight() / weight,
                                 Image.SCALE_DEFAULT));
-              
+
                         JLabel imgLabel2 = new JLabel(image);
                         imagePanel.add(imgLabel2); //加入圖片
                         imagePanel.updateUI();
@@ -104,20 +104,31 @@ public class leftPanel extends JFrame {
                             String[] filelist = f.list();
                             for (int i = 0; i < filelist.length; i++) {
                                 ImageIcon image = new ImageIcon(f + "/" + filelist[i]);
-                               try{
-                                int weight = image.getIconWidth() / 120;//設置圖片大小
-                                image.setImage(image.getImage().getScaledInstance(
-                                        image.getIconWidth() / weight,
-                                        image.getIconHeight() / weight,
-                                        Image.SCALE_DEFAULT));
-                               }
-                                        catch (Exception ex) {
-            image.setImage(image.getImage().getScaledInstance(
-                    100,
-                     150,
-                    Image.SCALE_DEFAULT));
-        }
-            
+                                String allowedFileTypes = ".png .gif .jpg .gif .swf .PNG .GIF .JPG .GIF .SWF";
+                                if (filelist[i].indexOf(".png") != -1
+                                        || filelist[i].indexOf(".gif") != -1
+                                        || filelist[i].indexOf(".jpg") != -1
+                                        || filelist[i].indexOf(".swf") != -1
+                                        || filelist[i].indexOf(".PNG") != -1
+                                        || filelist[i].indexOf(".GIF") != -1
+                                        || filelist[i].indexOf(".JPG") != -1
+                                        || filelist[i].indexOf(".SWF") != -1) {
+                                    new CopyFile(f + "/" + filelist[i], "userPic/" + filelist[i]);
+                                }
+                                System.out.println(filelist[i]);
+                                try {
+                                    int weight = image.getIconWidth() / 120;//設置圖片大小
+                                    image.setImage(image.getImage().getScaledInstance(
+                                            image.getIconWidth() / weight,
+                                            image.getIconHeight() / weight,
+                                            Image.SCALE_DEFAULT));
+                                } catch (Exception ex) {
+                                    image.setImage(image.getImage().getScaledInstance(
+                                            100,
+                                            150,
+                                            Image.SCALE_DEFAULT));
+                                }
+
                                 JLabel imgLabel2 = new JLabel(image);
                                 imagePanel.add(imgLabel2);//加入圖片
                             }
@@ -127,9 +138,10 @@ public class leftPanel extends JFrame {
             }
         });
         //===============================使用者新增檔案按鈕動作<END>
-LayoutPanel.add(popupMenu1); 
+        LayoutPanel.add(popupMenu1);
         return LayoutPanel;
     }
+
     void objectDB(String pathName) {
 
         //存所有擋下的圖檔名稱
@@ -142,19 +154,18 @@ LayoutPanel.add(popupMenu1);
 
             ImageIcon image = new ImageIcon(pathName + "/" + filelist[i]);
             try {
-            int weight = image.getIconWidth() / 120;//重設圖片大小
-            image.setImage(image.getImage().getScaledInstance(
-                    image.getIconWidth() / weight,
-                    image.getIconHeight() / weight,
-                    Image.SCALE_DEFAULT));
-        }
-        catch (Exception ex) {
-            image.setImage(image.getImage().getScaledInstance(
-                    100,
-                     150,
-                    Image.SCALE_DEFAULT));
-        }
-            
+                int weight = image.getIconWidth() / 120;//重設圖片大小
+                image.setImage(image.getImage().getScaledInstance(
+                        image.getIconWidth() / weight,
+                        image.getIconHeight() / weight,
+                        Image.SCALE_DEFAULT));
+            } catch (Exception ex) {
+                image.setImage(image.getImage().getScaledInstance(
+                        100,
+                        150,
+                        Image.SCALE_DEFAULT));
+            }
+
 
             JLabel imgLabel2 = new JLabel(image);
             imagePanel.add(imgLabel2);  //加入圖片
@@ -162,6 +173,7 @@ LayoutPanel.add(popupMenu1);
         scrollPane = new JScrollPane(imagePanel);
         LayoutPanel.add(scrollPane);
     }
+
     class ModifiedFlowLayout extends FlowLayout {
 
         public ModifiedFlowLayout(int align, int hgap, int vgap) {
@@ -222,5 +234,4 @@ LayoutPanel.add(popupMenu1);
             }
         }
     }
-    
 }

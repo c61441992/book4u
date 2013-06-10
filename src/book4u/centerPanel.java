@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -43,7 +44,7 @@ public class centerPanel extends javax.swing.JPanel {
     Point point1 = null;
     Point point2 = null;
     private JLabel north = null;
-    private JFrame mainFrame;
+    private mainFrame mainFrame;
     private JLabel northEast = null;
 
     private JLabel east = null;
@@ -59,7 +60,7 @@ public class centerPanel extends javax.swing.JPanel {
     int x,dx,dy, y, w, h,count=0;
     public centerPanel(JFrame frame) {
         MouseListen mouse = new MouseListen();
-        mainFrame = frame;
+        mainFrame = (book4u.mainFrame) frame;
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
         northWest = new JLabel();
@@ -119,13 +120,12 @@ public class centerPanel extends javax.swing.JPanel {
         west.setVisible(false);
        myList = new ArrayList();
        initComponents();
-
     }
-
     public void MOUSEinit()
     {//this.imageIcon = imageIcon;
         //this.setBounds(256,107,40,30);
-
+        if(currentSquareIndex<0) return;
+        
         x1 = myList.get(currentSquareIndex).getWidth();
         y1 = myList.get(currentSquareIndex).getHeight();
         isSelected = -1;
@@ -154,7 +154,20 @@ public class centerPanel extends javax.swing.JPanel {
 
     public JPanel insertPictureFrame()
     {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(){
+            public void paintComponent(Graphics g) {
+            BufferedImage  img = new BufferedImage(getWidth(), getHeight(),
+              BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = img.createGraphics();
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+              RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+              0));// 设置合成规则
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+            g.drawImage(img, 0, 0, null);
+            }
+        };
+        panel.setOpaque(false);
         panel.setBackground(new java.awt.Color(255, 255, 255));
         panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255)));
         panel.setLayout(null);
@@ -259,14 +272,14 @@ public class centerPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
-                .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
+                .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
-            .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+            .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -280,11 +293,10 @@ public class centerPanel extends javax.swing.JPanel {
     private javax.swing.JPanel rightPanel;
     // End of variables declaration//GEN-END:variables
       void menuItem1_actionPerformed(ActionEvent e) {
-        insertPictureFrame();
+          this.mainFrame.pictureFrameMenuActionPerformed();
 }
  void menuItem2_actionPerformed(ActionEvent e) {
-        insertTextArea();
-        
+        this.mainFrame.textBoxMenuActionPerformed();
 }
  
      public class MouseRightListen extends MouseAdapter 
@@ -308,11 +320,8 @@ public class centerPanel extends javax.swing.JPanel {
                 p1.x-=centerPanel.this.getLocationOnScreen().x;
                 p1.y-=centerPanel.this.getLocationOnScreen().y;
                  currentSquareIndex = getRec(p1);
-                 if(currentSquareIndex>=0){
-                 if(currentSquareIndex<=count)
-                 {
-                 MOUSEinit();
-                        count++;
+                 if(currentSquareIndex>=0){              
+
                 northWest.setVisible(true);
                 north.setVisible(true);
                 northEast.setVisible(true);
@@ -321,7 +330,7 @@ public class centerPanel extends javax.swing.JPanel {
                 south.setVisible(true);
                 southWest.setVisible(true);
                 west.setVisible(true);
-                 }
+                 
                  isSelected = currentSquareIndex;
                  myList.get(isSelected).setBorder(new LineBorder(Color.BLACK, 4));
 
@@ -333,7 +342,7 @@ public class centerPanel extends javax.swing.JPanel {
                  {
              //        isSelected = currentSquareIndex;
                     inout = true;
-                    myList.get(isSelected).setBorder(new EmptyBorder(0,0,100,100));
+                     myList.get(isSelected).setBorder(new LineBorder(Color.BLUE, 1));
                     setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                     northWest.setVisible(false);
                     north.setVisible(false);
@@ -594,14 +603,18 @@ public class centerPanel extends javax.swing.JPanel {
                 if(d.getComponent(i).getClass()==JLabel.class)
                     d.remove(i);
             d.setLayout(new OverlayLayout(d));
+            //d.setBackground(new Color(0,0,0,0));
             s.addMouseListener(new MouseListen());
             s.addMouseListener(new MouseRightListen());
             s.addMouseMotionListener(new MouseListen());
+            ImageIcon image = (ImageIcon) s.getIcon();
+            image.setImage(image.getImage().getScaledInstance(d.getWidth(),d.getHeight(),Image.SCALE_DEFAULT));
+            //anotherIcon.setImage(getScaledImage(anotherIcon.getImage(),d.getWidth(),d.getWidth()));
+            s.setIcon(image);
             d.add(s,0);
             d.updateUI();
             
         }
     }
 
-    
 }

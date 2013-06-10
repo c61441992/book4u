@@ -16,7 +16,7 @@ import javax.swing.JTextPane;
  * @author 桌電
  */
 public class mainFrame extends javax.swing.JFrame {
-    EditPanel text;
+    public EditPanel text;
     /**
      * Creates new form main
      */
@@ -44,12 +44,6 @@ public class mainFrame extends javax.swing.JFrame {
     public centerPanel getCenterPanel()
     {
         return (centerPanel) centerPanel;
-    }
-    
-    public void setRightPanelTextArea(JTextPane textPane)
-    {
-        EditPanel panel = (EditPanel)rightPanel;
-        //panel.call(textPane);
     }
     
     /**
@@ -262,9 +256,7 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_undoMenuItemActionPerformed
 
     private void pictureFrameMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pictureFrameMenuActionPerformed
-        centerPanel centerP = (centerPanel)centerPanel;
-        JPanel panel = centerP.insertPictureFrame(); // 圖片的panel 
-        
+         pictureFrameMenuActionPerformed();
     }//GEN-LAST:event_pictureFrameMenuActionPerformed
 
     private void pasteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteMenuActionPerformed
@@ -272,11 +264,19 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_pasteMenuActionPerformed
 
     private void textBoxMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBoxMenuActionPerformed
+        textBoxMenuActionPerformed();
+    }//GEN-LAST:event_textBoxMenuActionPerformed
+
+    public void pictureFrameMenuActionPerformed() {     
+        centerPanel centerP = (centerPanel)centerPanel;
+        JPanel panel = centerP.insertPictureFrame(); // 圖片的panel 
+    }
+    
+    public void textBoxMenuActionPerformed() {     
         centerPanel centerP = (centerPanel)centerPanel;
         JTextPane p = centerP.insertTextArea();  //文字框add到我的centerPanel
         text.call(centerP, p); //這行加入到你的  刪除這行可正常顯示
-    }//GEN-LAST:event_textBoxMenuActionPerformed
-
+    }
     
     /**
      * @param args the command line arguments
