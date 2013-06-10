@@ -126,8 +126,8 @@ public class centerPanel extends javax.swing.JPanel {
         //this.setBounds(256,107,40,30);
         if(currentSquareIndex<0) return;
         
-        x1 = myList.get(currentSquareIndex).getWidth();
-        y1 = myList.get(currentSquareIndex).getHeight();
+        x1 = myList.get(count).getWidth();
+        y1 = myList.get(count).getHeight();
         isSelected = -1;
         northWest.setBounds(0, 0, 5, 5);
         north.setBounds((x1 - 3) / 2, 0, 5, 5);
@@ -138,18 +138,18 @@ public class centerPanel extends javax.swing.JPanel {
         southWest.setBounds(0, y1 - 5, 5, 5);
         west.setBounds(0, (y1 - 3) / 2, 5, 5);
 
-        myList.get(currentSquareIndex).setLayout(null);
-        myList.get(currentSquareIndex).setMinimumSize(new Dimension(20, 20));
-        myList.get(currentSquareIndex).addMouseListener(new MouseListen());
-        myList.get(currentSquareIndex).addMouseMotionListener(new MouseListen());
-        myList.get(currentSquareIndex).add(northWest, null);
-        myList.get(currentSquareIndex).add(north, null);
-        myList.get(currentSquareIndex).add(northEast, null);
-        myList.get(currentSquareIndex).add(east, null);
-        myList.get(currentSquareIndex).add(southEast, null);
-        myList.get(currentSquareIndex).add(south, null);
-        myList.get(currentSquareIndex).add(southWest, null);
-        myList.get(currentSquareIndex).add(west, null);
+        myList.get(count).setLayout(null);
+        myList.get(count).setMinimumSize(new Dimension(20, 20));
+        myList.get(count).addMouseListener(new MouseListen());
+        myList.get(count).addMouseMotionListener(new MouseListen());
+        myList.get(count).add(northWest, null);
+        myList.get(count).add(north, null);
+        myList.get(count).add(northEast, null);
+        myList.get(count).add(east, null);
+        myList.get(count).add(southEast, null);
+        myList.get(count).add(south, null);
+        myList.get(count).add(southWest, null);
+        myList.get(count).add(west, null);
     }
 
     public JPanel insertPictureFrame()
@@ -177,9 +177,9 @@ public class centerPanel extends javax.swing.JPanel {
         myList.add(new arrayListType(panel));
         add(panel, 0);
         updateUI();
-        MOUSEinit();
          inout = true;
-        myList.get(count).setBorder(new LineBorder(Color.BLUE, 1));
+        myList.get(count).setBorder(new LineBorder(Color.BLUE, 1)); 
+        MOUSEinit();
         count++;
        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
        northWest.setVisible(false);
@@ -200,6 +200,7 @@ public class centerPanel extends javax.swing.JPanel {
         panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255)));
         panel.setLayout(null);
         panel.setBounds(50, 50, 100, 100);
+        panel.setDragEnabled(true);
         //panel.setEditable(true);
         myList.add(new arrayListType(panel));
         add(panel, 0);
